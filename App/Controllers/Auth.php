@@ -28,7 +28,12 @@ class Auth extends \Core\Controller {
         throw new Exception(serialize($errors));
       }
 
-      
+      // we should find user
+      $query = $this->db->query('
+        SELECT 
+        user_id 
+        FROM users
+      ');
 
       echo json_encode([
         'status' => 'OK',
