@@ -3,6 +3,7 @@ namespace App\Controllers;
 use PDO;
 use Exception;
 use App\Models\Authentication;
+use App\DB;
 
 class Auth extends \Core\Controller {
   function __construct() {
@@ -44,6 +45,7 @@ class Auth extends \Core\Controller {
         'status' => 'ERROR',
         'errors' => unserialize($errors->getMessage()),
         'token' => Authentication::generateToken(),
+        'test' => DB::test(),
       ]);  
     }
   }

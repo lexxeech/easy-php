@@ -1,12 +1,12 @@
 <?php
 namespace App\Controllers;
-use PDO;
 use Exception;
+use App\Database;
+use App\Models\User;
 
 class Users extends \Core\Controller {
   function __construct() {
-    $this->db = new PDO('mysql:host=localhost;dbname=php-crud', 'root',
-    '');
+    $this->db = new Database();
   }
 
   /**
@@ -17,16 +17,7 @@ class Users extends \Core\Controller {
    */
   public function getAction() {
     try {
-      $query = $this->db->query('
-        SELECT 
-        users.user_id, 
-        users.email, 
-        users.name, 
-        roles.name AS role_name 
-        FROM users 
-        LEFT JOIN roles 
-        ON users.role_id = roles.role_id
-      ');
+      $query = $this->db->rawQuery(User::GET);
 
       $items = array();
       foreach ($query as $row) {
@@ -34,6 +25,7 @@ class Users extends \Core\Controller {
           "user_id" => $row['user_id'],
           "name" => $row['name'],
           "email" => $row['email'],
+          "role_id" => $row['role_id'],
           "role" => $row['role_name'],
         ]);
       }
@@ -61,12 +53,7 @@ class Users extends \Core\Controller {
    */
   public function deleteAction() {
     try {
-      $query = $this->db->prepare('
-        DELETE FROM  
-        users
-        WHERE user_id = ?
-      ');
-      $query->execute(array($_POST['user_id']));
+      $query = $this->db->rawQuery(User::DELETE, [$_POST['user_id']]);
 
       http_response_code(200);
       echo json_encode([
@@ -103,12 +90,8 @@ class Users extends \Core\Controller {
         throw new Exception(serialize($errors));
       }
 
-      $query = $this->db->prepare('
-        INSERT INTO users (role_id, name, email, password)
-        VALUES (?, ?, ?, ?)
-      ');
-      $query->execute([
-        $_POST['role_id'], $_POST['name'], $_POST['email'], $_POST['password'], 
+      $query = $this->db->rawQuery(User::CREATE, [
+        $_POST['role_id'], $_POST['name'], $_POST['email'], $_POST['password'],
       ]);
 
       echo json_encode([
@@ -145,6 +128,10 @@ class Users extends \Core\Controller {
       if (sizeof($errors)) {
         throw new Exception(serialize($errors));
       }
+
+      $query = $this->db->rawQuery(User::UPDATE, [
+        $_POST['role_id'], $_POST['name'], $_POST['email'], $_POST['password'], $_POST['user_id'], 
+      ]);
       
       echo json_encode([
         'status' => 'OK',
