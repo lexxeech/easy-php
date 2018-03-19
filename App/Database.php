@@ -21,8 +21,31 @@ class Database {
   public function rawQuery($rawQuery = '', $params = []) {
     $query = $this->db->prepare($rawQuery);
     $query->execute($params);
-    
+
     return $query;
+  }
+
+  public function parsing($query) {
+    $items = array();
+    foreach ($query as $row) {
+      $item = array();
+      foreach ($row as $key => $value) {
+        // check if key is not a password and number
+        if (!is_numeric($key) && !is_numeric('password')) {
+          $item[$key] = $value ?: '';
+        }
+      }
+
+      array_push($items, $item);
+    }
+    
+    return $items;
+  }
+
+  public function withFirst($query) {
+    $item = $query->fetchAll();
+
+    return $item[0][0];
   }
 
   public function findAll($table = '') {

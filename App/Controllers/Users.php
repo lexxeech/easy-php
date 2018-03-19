@@ -18,17 +18,7 @@ class Users extends \Core\Controller {
   public function getAction() {
     try {
       $query = $this->db->rawQuery(User::GET);
-
-      $items = array();
-      foreach ($query as $row) {
-        array_push($items, [
-          "user_id" => $row['user_id'],
-          "name" => $row['name'],
-          "email" => $row['email'],
-          "role_id" => $row['role_id'],
-          "role" => $row['role_name'],
-        ]);
-      }
+      $items = $this->db->parsing($query);
 
       http_response_code(200);
       echo json_encode([

@@ -1,14 +1,13 @@
 <?php
 namespace App\Controllers;
-use PDO;
 use Exception;
+use App\Database;
 use App\Models\Authentication;
-use App\DB;
+use App\Models\User;
 
 class Auth extends \Core\Controller {
   function __construct() {
-    $this->db = new PDO('mysql:host=localhost;dbname=php-crud', 'root',
-    '');
+    $this->db = new Database();
   }
 
     /**
@@ -29,23 +28,22 @@ class Auth extends \Core\Controller {
         throw new Exception(serialize($errors));
       }
 
-      // we should find user
-      $query = $this->db->query('
-        SELECT 
-        user_id 
-        FROM users
-      ');
+      $token = Authentication::generateToken();
+      $user = $this->db->rawQuery(User::CHECK_BY_EMAIL, [$_POST['email']]);
+      $user = $this->db->withFirst($user);
+
+      $query = $this->db->rawQuery(Authentication::ADD_TOKEN, [$token, $_POST['email']]);
 
       echo json_encode([
         'status' => 'OK',
+        'token' => $token,
+        'exists' => $user,
       ]);
     } catch (Exception $errors) {
       http_response_code(500);
       echo json_encode([
         'status' => 'ERROR',
-        'errors' => unserialize($errors->getMessage()),
-        'token' => Authentication::generateToken(),
-        'test' => DB::test(),
+        'errors' => $errors->getMessage(),
       ]);  
     }
   }
