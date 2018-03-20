@@ -34,6 +34,7 @@ $router->add('/users/create', ['controller' => 'Users', 'action' => 'create']);
 $router->add('/users/update', ['controller' => 'Users', 'action' => 'update']);
 
 $router->add('/auth/get', ['controller' => 'Auth', 'action' => 'get']);
+$router->add('/auth/out', ['controller' => 'Auth', 'action' => 'out']);
 
 $router->add('{controller}/{action}');
     

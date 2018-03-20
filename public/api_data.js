@@ -35,6 +35,34 @@ define({ "api": [
     "groupTitle": "Authentication"
   },
   {
+    "type": "post",
+    "url": "/auth/out",
+    "title": "Sign out",
+    "name": "Sign_out",
+    "group": "Authentication",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>Access token</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/auth/out"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "App/Controllers/Auth.php",
+    "groupTitle": "Authentication"
+  },
+  {
     "type": "get",
     "url": "/",
     "title": "Home",

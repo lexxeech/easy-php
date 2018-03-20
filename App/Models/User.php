@@ -9,11 +9,6 @@ use PDO;
  */
 class User extends \Core\Model {
 
-  /**
-   * Get all the users as an associative array
-   *
-   * @return array
-   */
   public static function getAll() {
     $db = static::getDB();
     $stmt = $db->query('SELECT id, name FROM users');
@@ -58,5 +53,9 @@ class User extends \Core\Model {
 
   const CHECK_BY_ID = '
     SELECT EXISTS(SELECT 1 FROM users WHERE user_id = ?)
+  ';
+
+  const CHECK_BY_TOKEN = '
+    SELECT EXISTS(SELECT 1 FROM users WHERE token = ?)
   ';
 }
