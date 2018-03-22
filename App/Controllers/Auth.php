@@ -8,6 +8,7 @@ use App\Models\User;
 class Auth extends \Core\Controller {
   function __construct() {
     $this->db = new Database();
+    $this->auth = new Authentication();
   }
 
   /**
@@ -29,7 +30,7 @@ class Auth extends \Core\Controller {
       }
 
       $token = Authentication::generateToken();
-      $user = $this->db->rawQuery(User::CHECK_BY_EMAIL, [$_POST['email']]);
+      $user = $this->db->rawQuery(User::CHECK_BY_EMAIL_PASSWORD, [$_POST['email'], $_POST['password']]);
       $user = $this->db->withFirst($user);
 
       if (!$user) {
@@ -60,23 +61,25 @@ class Auth extends \Core\Controller {
    * @apiSampleRequest /auth/out
    */
   public function outAction() {
-    try {
+    try {  
       $token = Authentication::parseHeader();
+      $isLogged = $this->auth->validate($token);
 
-      /*$isLogged = Authentication::validate();
+      if (!$isLogged) {
+        throw new Exception(serialize([ 'detail' => "Token isn't found" ]));
+      }
 
-      if ($isLogged)*/
+      $this->db->rawQuery(Authentication::DELETE_TOKEN, [$token]);
 
       http_response_code(200);
       echo json_encode([
         'status' => 'OK',
-        'token' => $token,
       ]);
     } catch (Exception $errors) {
       http_response_code(500);
       echo json_encode([
         'status' => 'ERROR',
-        'errors' => $errors->getMessage(),
+        'errors' => unserialize($errors->getMessage()),
       ]);  
     }
   }

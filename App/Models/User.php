@@ -2,13 +2,7 @@
 namespace App\Models;
 use PDO;
 
-/**
- * Example user model
- *
- * PHP version 7.0
- */
 class User extends \Core\Model {
-
   public static function getAll() {
     $db = static::getDB();
     $stmt = $db->query('SELECT id, name FROM users');
@@ -47,6 +41,10 @@ class User extends \Core\Model {
     WHERE user_id = ?
   ';
 
+  const CHECK_BY_EMAIL_PASSWORD = '
+    SELECT EXISTS(SELECT 1 FROM users WHERE email = ? and password = ?)
+  ';
+
   const CHECK_BY_EMAIL = '
     SELECT EXISTS(SELECT 1 FROM users WHERE email = ?)
   ';
@@ -57,5 +55,13 @@ class User extends \Core\Model {
 
   const CHECK_BY_TOKEN = '
     SELECT EXISTS(SELECT 1 FROM users WHERE token = ?)
+  ';
+
+  const CHECK_BY_ADMIN_TOKEN = '
+    SELECT EXISTS(SELECT 1 FROM users WHERE token = ? AND role_id = 1)
+  ';
+
+  const CHECK_BY_USER_TOKEN = '
+    SELECT EXISTS(SELECT 1 FROM users WHERE token = ? AND role_id = 2)
   ';
 }
