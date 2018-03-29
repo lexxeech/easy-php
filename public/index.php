@@ -36,6 +36,11 @@ $router->add('/users/update', ['controller' => 'Users', 'action' => 'update']);
 $router->add('/auth/get', ['controller' => 'Auth', 'action' => 'get']);
 $router->add('/auth/out', ['controller' => 'Auth', 'action' => 'out']);
 
+$router->add('/posts/get', ['controller' => 'Posts', 'action' => 'get']);
+$router->add('/posts/delete', ['controller' => 'Posts', 'action' => 'delete']);
+$router->add('/posts/create', ['controller' => 'Posts', 'action' => 'create']);
+$router->add('/posts/update', ['controller' => 'Posts', 'action' => 'update']);
+
 $router->add('{controller}/{action}');
     
 $router->dispatch($_SERVER['QUERY_STRING']);

@@ -79,6 +79,75 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "/posts/delete",
+    "title": "Delete post",
+    "name": "Post_delete",
+    "group": "Posts",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>Access token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "post_id",
+            "description": "<p>Post id.</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/posts/delete"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "App/Controllers/Posts.php",
+    "groupTitle": "Posts"
+  },
+  {
+    "type": "get",
+    "url": "/posts/get",
+    "title": "Get all posts",
+    "name": "Posts_get",
+    "group": "Posts",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>Access token</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/posts/get"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "App/Controllers/Posts.php",
+    "groupTitle": "Posts"
+  },
+  {
+    "type": "post",
     "url": "/users/create",
     "title": "Create user",
     "name": "Create_user",
