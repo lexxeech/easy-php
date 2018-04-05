@@ -21,13 +21,6 @@ class Posts extends \Core\Controller {
    */
   public function getAction() {
     try {
-      $token = Authentication::parseHeader();
-      $isAllowed = $this->auth->adminValidate($token);
-
-      if (!$isAllowed) {
-        throw new Exception(serialize([ 'detail' => "Permission denied" ]));
-      }
-
       $query = $this->db->rawQuery(Post::GET);
       $items = $this->db->parsing($query);
       
@@ -41,6 +34,35 @@ class Posts extends \Core\Controller {
       echo json_encode([
         'status' => 'ERROR',
         'errors' => unserialize($errors->getMessage()),
+      ]);
+    }
+  }
+
+  /**
+   * @api {post} /posts/get-by Get post
+   * @apiName Post get
+   * @apiGroup Posts
+   * @apiHeader {String} token Access token
+   * @apiParam {Number} post_id Post id.
+   * @apiSampleRequest /posts/get-by
+   */
+  public function getByAction() {
+    try {
+      $query = $this->db->rawQuery(Post::GET_BY, [$_POST['post_id']]);
+      $item = $this->db->parsing($query);
+      
+      http_response_code(200);
+      echo json_encode([
+        'status' => 'OK',
+        'item' => $item,
+      ]);
+    } catch (Exception $errors) {
+      http_response_code(500);
+      echo json_encode([
+        'status' => 'ERROR',
+        // 'errors' => unserialize($errors->getMessage()),
+        'errors' => $errors->getMessage(),
+        
       ]);
     }
   }
@@ -64,6 +86,38 @@ class Posts extends \Core\Controller {
 
       $query = $this->db->rawQuery(Post::DELETE, [$_POST['post_id']]);
       
+      http_response_code(200);
+      echo json_encode([
+        'status' => 'OK',
+      ]);
+    } catch (Exception $errors) {
+      http_response_code(500);
+      echo json_encode([
+        'status' => 'ERROR',
+        'errors' => unserialize($errors->getMessage()),
+      ]);
+    }
+  }
+
+  public function updateAction() {
+    try {
+      $errors = [];
+      if ($_POST['post_id'] == '') $errors['post_id'] = 'This field is required!';
+      if ($_POST['img'] == '') $errors['img'] = 'This field is required!';
+      if ($_POST['title'] == '') $errors['title'] = 'This field is required!';
+      if ($_POST['body'] == '') $errors['body'] = 'This field is required!';
+
+      if (sizeof($errors)) {
+        throw new Exception(serialize($errors));
+      }
+
+      $token = Authentication::parseHeader();
+      $isAllowed = $this->auth->adminValidate($token);
+
+      if (!$isAllowed) {
+        throw new Exception(serialize([ 'detail' => "Permission denied" ]));
+      }
+
       http_response_code(200);
       echo json_encode([
         'status' => 'OK',

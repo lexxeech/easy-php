@@ -24,6 +24,20 @@ class User extends \Core\Model {
     ON users.role_id = roles.role_id
   ';
 
+  const GET_BY = '
+    SELECT 
+    users.user_id, 
+    users.role_id, 
+    users.email, 
+    users.name, 
+    users.token, 
+    roles.name AS role_name 
+    FROM users 
+    LEFT JOIN roles 
+    ON users.role_id = roles.role_id
+    WHERE users.user_id = ?    
+  ';
+
   const DELETE = '
     DELETE FROM 
     users

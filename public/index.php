@@ -29,6 +29,7 @@ $router = new Core\Router();
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
 
 $router->add('/users/get', ['controller' => 'Users', 'action' => 'get']);
+$router->add('/users/get-by', ['controller' => 'Users', 'action' => 'getBy']);
 $router->add('/users/delete', ['controller' => 'Users', 'action' => 'delete']);
 $router->add('/users/create', ['controller' => 'Users', 'action' => 'create']);
 $router->add('/users/update', ['controller' => 'Users', 'action' => 'update']);
@@ -37,6 +38,7 @@ $router->add('/auth/get', ['controller' => 'Auth', 'action' => 'get']);
 $router->add('/auth/out', ['controller' => 'Auth', 'action' => 'out']);
 
 $router->add('/posts/get', ['controller' => 'Posts', 'action' => 'get']);
+$router->add('/posts/get-by', ['controller' => 'Posts', 'action' => 'getBy']);
 $router->add('/posts/delete', ['controller' => 'Posts', 'action' => 'delete']);
 $router->add('/posts/create', ['controller' => 'Posts', 'action' => 'create']);
 $router->add('/posts/update', ['controller' => 'Posts', 'action' => 'update']);

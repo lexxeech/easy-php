@@ -34,6 +34,47 @@ class Users extends \Core\Controller {
       echo json_encode([
         'status' => 'OK',
         'items' => $items,
+        'c' => $token
+      ]);
+    } catch (Exception $errors) {
+      http_response_code(500);
+      echo json_encode([
+        'status' => 'ERROR',
+        'errors' => unserialize($errors->getMessage()),
+      ]);
+    }
+  }
+
+  /**
+   * @api {get} /users/get-by Get user
+   * @apiName User
+   * @apiGroup Users
+   * @apiHeader {String} token Access token
+   * @apiSampleRequest /users/get-by
+   */
+  public function getByAction() {
+    try {
+      $errors = [];
+      if ($_POST['post_id'] == '') $errors['role_id'] = 'This field is required!';
+
+      if (sizeof($errors)) {
+        throw new Exception(serialize($errors));
+      }
+
+      $token = Authentication::parseHeader();
+      $isAllowed = $this->auth->adminValidate($token);
+
+      if (!$isAllowed) {
+        throw new Exception(serialize([ 'detail' => "Permission denied" ]));
+      }
+
+      $query = $this->db->rawQuery(User::GET_BY, [$_POST['post_id']]);
+      $item = $this->db->parsing($query);
+
+      http_response_code(200);
+      echo json_encode([
+        'status' => 'OK',
+        'item' => $item
       ]);
     } catch (Exception $errors) {
       http_response_code(500);
@@ -89,13 +130,6 @@ class Users extends \Core\Controller {
    */
   public function createAction() {
     try {
-      $token = Authentication::parseHeader();
-      $isAllowed = $this->auth->adminValidate($token);
-
-      if (!$isAllowed) {
-        throw new Exception(serialize([ 'detail' => "Permission denied" ]));
-      }
-
       $errors = [];
       if ($_POST['role_id'] == '') $errors['role_id'] = 'This field is required!';
       if ($_POST['name'] == '') $errors['name'] = 'This field is required!';
@@ -104,6 +138,13 @@ class Users extends \Core\Controller {
 
       if (sizeof($errors)) {
         throw new Exception(serialize($errors));
+      }
+      
+      $token = Authentication::parseHeader();
+      $isAllowed = $this->auth->adminValidate($token);
+
+      if (!$isAllowed) {
+        throw new Exception(serialize([ 'detail' => "Permission denied" ]));
       }
 
       $query = $this->db->rawQuery(User::CREATE, [
@@ -136,13 +177,6 @@ class Users extends \Core\Controller {
    */
   public function updateAction() {
     try {
-      $token = Authentication::parseHeader();
-      $isAllowed = $this->auth->adminValidate($token);
-
-      if (!$isAllowed) {
-        throw new Exception(serialize([ 'detail' => "Permission denied" ]));
-      }
-
       $errors = [];
       if ($_POST['role_id'] == '') $errors['role_id'] = 'This field is required!';
       if ($_POST['name'] == '') $errors['name'] = 'This field is required!';
@@ -151,6 +185,13 @@ class Users extends \Core\Controller {
 
       if (sizeof($errors)) {
         throw new Exception(serialize($errors));
+      }
+      
+      $token = Authentication::parseHeader();
+      $isAllowed = $this->auth->adminValidate($token);
+
+      if (!$isAllowed) {
+        throw new Exception(serialize([ 'detail' => "Permission denied" ]));
       }
 
       $query = $this->db->rawQuery(User::UPDATE, [

@@ -25,6 +25,10 @@ class Authentication extends \Core\Model {
   }
 
   public function validate($token) {
+    if (!$token) {
+      return false;
+    }
+
     $user = $this->db->rawQuery(User::CHECK_BY_TOKEN, [$token]);
     $user = $this->db->withFirst($user);
 
@@ -32,6 +36,10 @@ class Authentication extends \Core\Model {
   }
 
   public function adminValidate($token) {
+    if (!$token) {
+      return false;
+    }
+    
     $user = $this->db->rawQuery(User::CHECK_BY_ADMIN_TOKEN, [$token]);
     $user = $this->db->withFirst($user);
 
@@ -46,6 +54,6 @@ class Authentication extends \Core\Model {
       }
     }
 
-    return $token;
+    return $token || '';
   }
 }

@@ -119,6 +119,47 @@ define({ "api": [
     "groupTitle": "Posts"
   },
   {
+    "type": "post",
+    "url": "/posts/get-by",
+    "title": "Get post",
+    "name": "Post_get",
+    "group": "Posts",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>Access token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "post_id",
+            "description": "<p>Post id.</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/posts/get-by"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "App/Controllers/Posts.php",
+    "groupTitle": "Posts"
+  },
+  {
     "type": "get",
     "url": "/posts/get",
     "title": "Get all posts",
@@ -312,6 +353,34 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "/users/update"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "App/Controllers/Users.php",
+    "groupTitle": "Users"
+  },
+  {
+    "type": "get",
+    "url": "/users/get-by",
+    "title": "Get user",
+    "name": "User",
+    "group": "Users",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>Access token</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/users/get-by"
       }
     ],
     "version": "0.0.0",
