@@ -71,8 +71,16 @@ class User extends \Core\Model {
     SELECT EXISTS(SELECT 1 FROM users WHERE token = ?)
   ';
 
+  const GET_ID_BY_TOKEN = '
+    SELECT user_id FROM users WHERE token = ?
+  ';
+
   const CHECK_BY_ADMIN_TOKEN = '
     SELECT EXISTS(SELECT 1 FROM users WHERE token = ? AND role_id = 1)
+  ';
+
+  const GET_ID_BY_ADMIN_TOKEN = '
+    SELECT user_id FROM users WHERE token = ? AND role_id = 1
   ';
 
   const CHECK_BY_USER_TOKEN = '

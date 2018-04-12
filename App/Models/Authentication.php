@@ -24,26 +24,36 @@ class Authentication extends \Core\Model {
     return md5(uniqid(mt_rand(), true));
   }
 
-  public function validate($token) {
+  public function validate($token, $withReturn = false) {
     if (!$token) {
       return false;
     }
 
-    $user = $this->db->rawQuery(User::CHECK_BY_TOKEN, [$token]);
-    $user = $this->db->withFirst($user);
-
-    return $user ? true : false;
+    if ($withReturn) {
+      $user = $this->db->rawQuery(User::GET_ID_BY_TOKEN, [$token]);
+      $user = $this->db->withFirst($user);
+      return $user;
+    } else {
+      $user = $this->db->rawQuery(User::CHECK_BY_TOKEN, [$token]);
+      $user = $this->db->withFirst($user);
+      return $user ? true : false;
+    }
   }
 
-  public function adminValidate($token) {
+  public function adminValidate($token, $withReturn = false) {
     if (!$token) {
       return false;
     }
     
-    $user = $this->db->rawQuery(User::CHECK_BY_ADMIN_TOKEN, [$token]);
-    $user = $this->db->withFirst($user);
-
-    return $user ? true : false;
+    if ($withReturn) {
+      $user = $this->db->rawQuery(User::GET_ID_BY_ADMIN_TOKEN, [$token]);
+      $user = $this->db->withFirst($user);
+      return $user;
+    } else {
+      $user = $this->db->rawQuery(User::CHECK_BY_ADMIN_TOKEN, [$token]);
+      $user = $this->db->withFirst($user);
+      return $user ? true : false;
+    }
   }
 
   public static function parseHeader() {
@@ -54,6 +64,6 @@ class Authentication extends \Core\Model {
       }
     }
 
-    return $token || '';
+    return $token;
   }
 }

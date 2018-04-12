@@ -79,6 +79,61 @@
   },
   {
     "type": "post",
+    "url": "/posts/create",
+    "title": "Create post",
+    "name": "Post_create",
+    "group": "Posts",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>Access token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "img",
+            "description": "<p>Image</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "title",
+            "description": "<p>Title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "body",
+            "description": "<p>Body</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/posts/create"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "App/Controllers/Posts.php",
+    "groupTitle": "Posts"
+  },
+  {
+    "type": "post",
     "url": "/posts/delete",
     "title": "Delete post",
     "name": "Post_delete",
@@ -153,6 +208,68 @@
     "sampleRequest": [
       {
         "url": "/posts/get-by"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "App/Controllers/Posts.php",
+    "groupTitle": "Posts"
+  },
+  {
+    "type": "post",
+    "url": "/posts/update",
+    "title": "Update post",
+    "name": "Post_update",
+    "group": "Posts",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>Access token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "post_id",
+            "description": "<p>Post id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "img",
+            "description": "<p>Image</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "title",
+            "description": "<p>Title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "body",
+            "description": "<p>Body</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/posts/update"
       }
     ],
     "version": "0.0.0",
