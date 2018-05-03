@@ -63,6 +63,102 @@ define({ "api": [
     "groupTitle": "Authentication"
   },
   {
+    "type": "post",
+    "url": "/comments/create",
+    "title": "Create comment",
+    "name": "Comments_create",
+    "group": "Comments",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>Access token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "post_id",
+            "description": "<p>Post id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "comment",
+            "description": "<p>Comment.</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/comments/create"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "App/Controllers/Comments.php",
+    "groupTitle": "Comments"
+  },
+  {
+    "type": "post",
+    "url": "/comments/update",
+    "title": "Update comments",
+    "name": "Comments_update",
+    "group": "Comments",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>Access token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "comment_id",
+            "description": "<p>Comment id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "comment",
+            "description": "<p>Comment.</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/comments/update"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "App/Controllers/Comments.php",
+    "groupTitle": "Comments"
+  },
+  {
     "type": "get",
     "url": "/",
     "title": "Home",
