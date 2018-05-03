@@ -1,4 +1,4 @@
-[
+define({ "api": [
   {
     "type": "post",
     "url": "/auth/get",
@@ -378,19 +378,6 @@
     "title": "Get all posts",
     "name": "Posts_get",
     "group": "Posts",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "token",
-            "description": "<p>Access token</p>"
-          }
-        ]
-      }
-    },
     "sampleRequest": [
       {
         "url": "/posts/get"
@@ -628,4 +615,4 @@
     "filename": "App/Controllers/Users.php",
     "groupTitle": "Users"
   }
-]
+] });

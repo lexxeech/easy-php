@@ -16,7 +16,6 @@ class Posts extends \Core\Controller {
    * @api {get} /posts/get Get all posts
    * @apiName Posts get
    * @apiGroup Posts
-   * @apiHeader {String} token Access token
    * @apiSampleRequest /posts/get
    */
   public function getAction() {
